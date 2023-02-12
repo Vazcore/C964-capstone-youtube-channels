@@ -7,6 +7,23 @@
   min-height: 100vh;
 }
 
+.mainWrapper{
+  padding: 20px;
+}
+
+.channelsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  align-content: space-between;
+  justify-content: center;
+}
+
+.channelCard {
+  flex-basis: 20%;
+  margin: 10px;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;
