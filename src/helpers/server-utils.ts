@@ -14,7 +14,7 @@ export const readCSVDataset = async (fname: string): Promise<Array<TDataset>> =>
     ).on("data", function(row) {
       data.push(row as TDataset);
     }).on("end", function () {
-      resolve(data.slice(0));
+      resolve(data.slice(1));
     });
   });
 };

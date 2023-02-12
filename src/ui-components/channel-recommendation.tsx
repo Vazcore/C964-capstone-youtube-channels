@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
-import styles from "@/styles/Home.module.css"
+import styles from "@/styles/Home.module.css";
 import Typography from "@mui/material/Typography";
 import { IChannel } from "@/db/services/channels";
 import axios from "axios";

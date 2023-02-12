@@ -19,8 +19,12 @@ export const connect = async () => {
   DBConfig.db = DBConfig.client.db(process.env.DB_NAME);
   const channelsCollection: mongoDB.Collection = DBConfig.db.collection(get(process, "env.CHANNELS_COLLECTION_NAME", ""));
   const similarChannelsCollection: mongoDB.Collection = DBConfig.db.collection(get(process, "env.SIMILAR_CHANNELS_COLLECTION_NAME", ""));
+  const regressionsCollection: mongoDB.Collection = DBConfig.db.collection(get(process, "env.REGRESSIONS", ""));
+  const channelsSLRCollection: mongoDB.Collection = DBConfig.db.collection(get(process, "env.CHANELLS_SLR", ""));
   setCollection(DB_COLLECTION.CHANNELS, channelsCollection);
   setCollection(DB_COLLECTION.SIMILAR_CHANNELS, similarChannelsCollection);
+  setCollection(DB_COLLECTION.REGRESSIONS, regressionsCollection);
+  setCollection(DB_COLLECTION.CHANELLS_SLR, channelsSLRCollection);
 };
 
 // export const closeConnection = async () => {
