@@ -9,6 +9,7 @@ export default async function handler(
 ) {
   await connect();
   const from = Number(get(req, "query.from", 0));
-  const channels = await getAllChannels(from);
+  const to = Number(get(req, "query.to", 10));
+  const channels = await getAllChannels(from, to);
   return res.status(200).json({ status: "success", data: channels});
 }

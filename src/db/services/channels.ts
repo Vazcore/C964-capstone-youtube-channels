@@ -3,6 +3,7 @@ import { strToNum } from "@/helpers/utils";
 import { DB_COLLECTION, getCollection } from "../collections";
 
 export interface IChannel {
+  _id?: string;
   id: number;
   name: string;
   subs: number;

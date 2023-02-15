@@ -28,7 +28,7 @@ export const getRecommendedVideos = async (similarToChannelId: number) => {
     {
       $lookup: {
         from: DB_COLLECTION.CHANNELS,
-        localField: "similarToChannelId",
+        localField: "id",
         foreignField: "id",
         as: "details",
       },
