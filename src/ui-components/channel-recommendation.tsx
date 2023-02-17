@@ -7,21 +7,17 @@ import { IChannel } from "@/db/services/channels";
 import axios from "axios";
 import { clientUrls } from "@/helpers/client-urls";
 import { get } from "lodash";
-import ChannelCard from "./channel-card";
 import ChannelsTable from "./channels-table";
 import Progress from "./progress";
 
-export const ChannelRecommendation = () => {
-  const [channels, setChannels] = useState<Array<IChannel>>([]);
-  const [ recommendedChannels, setRecommendedChannels ] = useState([]);
+interface IChannelRecommendationProps {
+  channels: Array<IChannel>;
+}
 
-  const fetchChannels = useCallback(async (from = 0) => {
-    const response = await axios({
-      method: "GET",
-      url: `${clientUrls.FETCH_CHANNELS}?from=${from}&to=1000`
-    });
-    setChannels(get(response, "data.data", []) as Array<IChannel>);
-  }, [setChannels]);
+export const ChannelRecommendation = ({
+  channels = [],
+}: IChannelRecommendationProps) => {
+  const [ recommendedChannels, setRecommendedChannels ] = useState([]);
 
   const fetchRecommendations = useCallback(async (id: string) => {
     const response = await axios({
@@ -30,10 +26,6 @@ export const ChannelRecommendation = () => {
     });
     setRecommendedChannels(get(response, "data.data", []));
   }, [setRecommendedChannels]);
-  
-  useEffect(() => {
-    fetchChannels();
-  }, []);
 
   return (
     <Card sx={{minWidth: "85%"}} className={styles.mainWrapper}>

@@ -13,6 +13,7 @@ import Button from '@mui/material/Button';
 import BasicModal from "./modal";
 import { Typography } from "@mui/material";
 import Progress from "./progress";
+import { get } from "lodash";
 
 interface IChannelsTableProps {
   channels: Array<IChannel>;
@@ -109,7 +110,7 @@ export const ChannelsTable = ({
             {recommendedChannels.length === 0 && <Progress />}
             {recommendedChannels.length !== 0 && (
               recommendedChannels.map((rChannel) => (
-                <div key={rChannel._id}>{rChannel.details[0].name}</div>
+                <div key={rChannel._id}>{get(rChannel, "details[0].name", "")}</div>
               ))
             )}
           </>
