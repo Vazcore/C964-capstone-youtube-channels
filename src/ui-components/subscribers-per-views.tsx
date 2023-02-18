@@ -34,7 +34,7 @@ export const ChartSubscribersPerViews = ({
     const data = {
       datasets: [
         {
-          label: "",
+          label: "Subscribers per views",
           data: channels.filter(channel => channel.views <= 25000000000 && channel.subs <= 50000000).map(channel => ({
             x: channel.views,
             y: channel.subs,
@@ -47,7 +47,7 @@ export const ChartSubscribersPerViews = ({
   }, [channels, setChartData]);
   return (
     <Card sx={{minWidth: "85%"}} className={styles.mainWrapper}>
-      <Typography gutterBottom variant="h5" component="div">
+      <Typography gutterBottom variant="h5" component="div" className={styles.sectionTitle}>
         Youtube subscribers per views (scatter plot)
       </Typography>
       {chartData !== null && <ScatterChart options={options} data={chartData} />}

@@ -16,6 +16,20 @@
   justify-content: center;
 }
 
+.sectionTitle {
+  border-bottom: 1px solid #e1dcdc;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+}
+
+.flexBlock {
+  display: flex;
+}
+
+.blockPadding {
+  padding: 10px 30px;
+}
+
 .channelCard {
   flex-basis: 20%;
   margin: 10px;
@@ -51,6 +65,10 @@
 .code {
   font-weight: 700;
   font-family: var(--font-mono);
+}
+
+.underline {
+  text-decoration: underline;
 }
 
 .grid {

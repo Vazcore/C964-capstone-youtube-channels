@@ -9,6 +9,7 @@ import {
   Title,
   Tooltip,
   Legend,
+  ChartData,
 } from "chart.js";
 
 ChartJS.register(
@@ -22,13 +23,17 @@ ChartJS.register(
 );
 
 interface ILineChartProps {
-  height: number;
+  height?: number;
+  width?: number;
   title?: string;
+  data: ChartData<"line">;
 }
 
 export const LineChart = ({
+  width,
   height = 150,
   title = "Subscribers per views",
+  data,
 }: ILineChartProps) => {
   const labels = [5, 10, 30];
 
@@ -40,24 +45,14 @@ export const LineChart = ({
       },
       title: {
         display: true,
-        text: "Subscribers per views",
+        text: title,
       },
     },
   }), [title]);
 
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "Dataset 1",
-        data: labels.map(() => 1),
-        borderColor: "rgb(255, 99, 132)",
-        backgroundColor: "rgba(255, 99, 132, 0.5)",
-      }
-    ],
-  };
   return (
     <Line
+      width={width}
       height={height}
       options={options}
       data={data}

@@ -99,7 +99,7 @@ export const ChartGroupByViewsCategory = ({
   }, [channels, setChartData, trendType]);
   return (
     <Card sx={{minWidth: "85%"}} className={styles.mainWrapper}>
-      <Typography gutterBottom variant="h5" component="div">
+      <Typography gutterBottom variant="h5" component="div" className={styles.sectionTitle}>
         Categories Trend
       </Typography>
       <FormControl>

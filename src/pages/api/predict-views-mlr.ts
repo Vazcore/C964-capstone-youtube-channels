@@ -18,5 +18,5 @@ export default async function handler(
   }
   const formula = await getMLRFormula();
   const y = MVLR.predict(formula, [Number(x1), Number(x2)]);
-  return res.status(200).json({ status: "success", y: first(y)});
+  return res.status(200).json({ status: "success", y: Math.floor(Number(first(y)))});
 }
