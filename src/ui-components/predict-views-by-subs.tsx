@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import styles from "@/styles/Home.module.css";
 import Typography from "@mui/material/Typography";
@@ -34,9 +34,13 @@ export const PredictViewsBySubs = () => {
   const [ sliderDisabled, setSliderDisabled ] = useState(false);
   const [ chartData, setChartData ] = useState<ChartData<"line"> | null>(null);
   const [ predictedYears, setPredictedYears ] = useState<number>(5);
-  const [ predictedSubsPerYear, setPredictedSubsPerYear ] = useState(20000);
+  const [ predictedSubsPerYear, setPredictedSubsPerYear ] = useState(7000000);
 
-  const setPredictionChart = async (subs: number, years = predictedYears) => {
+  const setPredictionChart = async (
+    subs: number,
+    years = predictedYears,
+    subsPerYear = predictedSubsPerYear,
+  ) => {
     setChartData(null as unknown as ChartData<"line">);
     setSliderDisabled(true);
     let response;
@@ -45,7 +49,7 @@ export const PredictViewsBySubs = () => {
     } else {
       response = await axios({
         method: "GET",
-        url: `${clientUrls.FETCH_PREDICT_BULK_SLR}?subs=${subs}&years=${years}&subsPerYear=${predictedSubsPerYear}`,
+        url: `${clientUrls.FETCH_PREDICT_BULK_SLR}?subs=${subs}&years=${years}&subsPerYear=${subsPerYear}`,
       });
     }
     
@@ -91,8 +95,13 @@ export const PredictViewsBySubs = () => {
     setPredictedYears(Number(val));
     setPredictionChart(selectedValue, Number(val));
   };
+  const onSliderSubsPerYearChange = (event: Event, val: number | number[]) => {
+    setPredictedSubsPerYear(Number(val));
+    setPredictionChart(selectedValue, predictedYears, Number(val));
+  };
   const debouncedOnSliderChange = debounce(onSliderChange, 500);
   const debouncedOnSliderYearChange = debounce(onSliderYearChange, 500);
+  const debouncedOnSliderSubsPerYearChange = debounce(onSliderSubsPerYearChange, 500);
   return (
     <Card sx={{minWidth: "85%"}} className={styles.mainWrapper}>
       <Typography gutterBottom variant="h5" component="div" className={styles.sectionTitle}>
@@ -127,15 +136,32 @@ export const PredictViewsBySubs = () => {
                 {chartData !== null && (
                   <>
                     <p>Based on the {formatNumber(predictedNumberOfViews)} views that was predicted according to the {formatNumber(selectedValue)} subscribers. In the next {predictedYears} years we can predict the number of views</p>
-                    <Slider step={1}
-                      min={1}
-                      max={20}
-                      isDisabled={sliderDisabled}
-                      defaultValue={predictedYears}
-                      onChange={debouncedOnSliderYearChange}
-                      onValueText={formatNumber}
-                    />
-                    <p>Number of years: {predictedYears}</p>
+                    <div className={styles.flexBlock}>
+                      <div className={styles.blockPadding}>
+                        <Slider step={1}
+                          min={1}
+                          max={20}
+                          isDisabled={sliderDisabled}
+                          defaultValue={predictedYears}
+                          onChange={debouncedOnSliderYearChange}
+                          onValueText={formatNumber}
+                        />
+                        <p>Number of years: {predictedYears}</p>
+                      </div>
+
+                      <div className={styles.blockPadding}>
+                        <Slider step={1000}
+                          min={10000}
+                          max={20000000}
+                          isDisabled={sliderDisabled}
+                          defaultValue={predictedSubsPerYear}
+                          onChange={debouncedOnSliderSubsPerYearChange}
+                          onValueText={formatNumber}
+                        />
+                        <p>Subscribers increase rate per year: {formatNumber(predictedSubsPerYear)}</p>
+                      </div>
+                    </div>
+                    
                     <LineChart data={chartData}
                       width={800}
                       height={400}

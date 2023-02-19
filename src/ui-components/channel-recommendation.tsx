@@ -1,5 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
-import Button from "@mui/material/Button";
+import React, { useCallback, useState } from "react";
 import Card from "@mui/material/Card";
 import styles from "@/styles/Home.module.css";
 import Typography from "@mui/material/Typography";
@@ -9,6 +8,8 @@ import { clientUrls } from "@/helpers/client-urls";
 import { get } from "lodash";
 import ChannelsTable from "./channels-table";
 import Progress from "./progress";
+import { isMockEnabled } from "@/helpers/config";
+import { mockedRecommendedChannels } from "./__mocks__/mock-recommended-channels";
 
 interface IChannelRecommendationProps {
   channels: Array<IChannel>;
@@ -20,17 +21,22 @@ export const ChannelRecommendation = ({
   const [ recommendedChannels, setRecommendedChannels ] = useState([]);
 
   const fetchRecommendations = useCallback(async (id: string) => {
-    const response = await axios({
-      method: "GET",
-      url: `${clientUrls.FETCH_RECOMMENDATIONS}?id=${id}`
-    });
+    let response;
+    if (isMockEnabled) {
+      response = {data: mockedRecommendedChannels};
+    } else {
+      response = await axios({
+        method: "GET",
+        url: `${clientUrls.FETCH_RECOMMENDATIONS}?id=${id}`
+      });
+    }
     setRecommendedChannels(get(response, "data.data", []));
   }, [setRecommendedChannels]);
 
   return (
     <Card sx={{minWidth: "85%"}} className={styles.mainWrapper}>
       <Typography gutterBottom variant="h5" component="div">
-        Youtube Channel Recommendation
+        {"Pick your favourite channel and we\'ll find you something similar"}
       </Typography>
       <div className={styles.channelsContainer}>
         {channels.length === 0 && <Progress />}
@@ -41,10 +47,6 @@ export const ChannelRecommendation = ({
             fetchRecommendedChannels={fetchRecommendations}
           />
         )}
-        
-        {/* {channels && channels.map(channel => (
-          <ChannelCard key={channel._id} channel={channel} fetchRecommendations={fetchRecommendations} />
-        ))} */}
       </div>
     </Card>
   );

@@ -18,3 +18,18 @@ export const formatNumber = (n: number) => {
   });
   return res.split("").reverse().join("");
 };
+
+export const shortenNumber = (num: number): string => {
+  const billions = Math.floor(num / 1000000000);
+  const millions = Math.floor(num / 1000000);
+  const kilos = Math.floor(num / 1000);
+  if (billions >= 1) {
+    return `~${billions}B`;
+  } else if (millions >= 1) {
+    return `~${millions}M`;
+  } else if (kilos >= 1) {
+    return `~${kilos}K`;
+  } else {
+    return formatNumber(num);
+  }
+};

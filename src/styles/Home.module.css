@@ -30,9 +30,19 @@
   padding: 10px 30px;
 }
 
+.blockPaddingXs {
+  padding: 3px;
+}
+
+.cardStat {
+  padding: 3px;
+  font-size: 10px;
+  font-weight: bold;
+}
+
 .channelCard {
-  flex-basis: 20%;
   margin: 10px;
+  flex: 1;
 }
 
 .description {

@@ -36,7 +36,7 @@ export default function Home() {
 
   useEffect(() => {
     fetchChannels();
-  }, []);
+  }, [fetchChannels]);
   return (
     <>
       <Head>
@@ -47,9 +47,9 @@ export default function Home() {
         <main className={styles.main}>
           <ChartSubscribersPerViews channels={channels} />
           <ChartGroupByViewsCategory channels={channels} />
+          <ChannelRecommendation channels={channels} />
           <PredictViewsBySubs />
           <PredictViewsByMultifactors />
-          <ChannelRecommendation channels={channels} />
         </main>
       }
     </>

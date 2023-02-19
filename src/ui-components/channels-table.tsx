@@ -14,6 +14,8 @@ import BasicModal from "./modal";
 import { Typography } from "@mui/material";
 import Progress from "./progress";
 import { get } from "lodash";
+import styles from "@/styles/Home.module.css";
+import ChannelCard from "./channel-card";
 
 interface IChannelsTableProps {
   channels: Array<IChannel>;
@@ -105,14 +107,20 @@ export const ChannelsTable = ({
       <BasicModal open={showModal} handleOpen={openModal} handleClose={closeModal}>
           <>
             <Typography id="modal-modal-title" variant="h6" component="h2">
-              {recommendedChannels.length === 0 && "Please wait for "} Recommendations
+              {recommendedChannels.length === 0 && "Please wait for recommendations ..."}
+              {recommendedChannels.length !== 0 && (
+                <div className={styles.sectionTitle}>{"We\'ve found channels that you would like"}</div>
+              )}
             </Typography>
             {recommendedChannels.length === 0 && <Progress />}
-            {recommendedChannels.length !== 0 && (
-              recommendedChannels.map((rChannel) => (
-                <div key={rChannel._id}>{get(rChannel, "details[0].name", "")}</div>
-              ))
-            )}
+            
+            <div className={styles.flexBlock}>
+              {recommendedChannels.length !== 0 && (
+                recommendedChannels.map((rChannel) => (
+                  <ChannelCard key={rChannel._id} channel={get(rChannel, "details[0]", {}) as IChannel} />
+                ))
+              )}
+            </div>
           </>
       </BasicModal>
     </Box>
