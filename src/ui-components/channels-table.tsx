@@ -16,6 +16,7 @@ import Progress from "./progress";
 import { get } from "lodash";
 import styles from "@/styles/Home.module.css";
 import ChannelCard from "./channel-card";
+import { formatNumber } from "@/helpers/utils";
 
 interface IChannelsTableProps {
   channels: Array<IChannel>;
@@ -80,9 +81,9 @@ export const ChannelsTable = ({
                   <TableCell component="th" scope="row">
                     {channel.name}
                   </TableCell>
-                  <TableCell align="right">{channel.subs}</TableCell>
-                  <TableCell align="right">{channel.views}</TableCell>
-                  <TableCell align="right">{channel.videoCounts}</TableCell>
+                  <TableCell align="right">{formatNumber(channel.subs)}</TableCell>
+                  <TableCell align="right">{formatNumber(channel.views)}</TableCell>
+                  <TableCell align="right">{formatNumber(channel.videoCounts)}</TableCell>
                   <TableCell align="right">{channel.category}</TableCell>
                   <TableCell align="right">
                     <Button variant="contained" onClick={() => startSearchRecommendations(channel.id)}>Find Similar Channels</Button>
