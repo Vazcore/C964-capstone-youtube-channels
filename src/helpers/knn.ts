@@ -41,7 +41,5 @@ export class KNNSimilarYoutubeChannels {
     });
   }
 
-  distance() {
-
-  }
+  distance() {}
 }
